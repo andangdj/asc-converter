@@ -37,7 +37,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEdFTkVSQVRFX01F",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDk1MTRDNUQ0OUJEMzYwN0YKUldSL1lOT2IxTVVVbFQ3N2FSK28xbWRHWko1WS9HR1RlWjdxYzI2Qi9XdjlhWUlKNXptNGluK3IK",
       "endpoints": [
         "https://github.com/andangdj/asc-converter/releases/latest/download/latest.json"
       ]
