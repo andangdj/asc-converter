@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    
+    <!-- XML Blue Gradient -->
+    <linearGradient id="xmlGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <!-- Excel Green Gradient -->
+    <linearGradient id="excelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base Rounded Square -->
+  <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+
+  <!-- Left Side: XML Bracket (<) -->
+  <path 
+    d="M 190 176 L 110 256 L 190 336" 
+    stroke="url(#xmlGrad)" 
+    stroke-width="40" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    fill="none" 
+  />
+
+  <!-- Right Side: Excel Grid / Table -->
+  <rect 
+    x="250" y="176" 
+    width="150" height="160" 
+    rx="24" 
+    stroke="url(#excelGrad)" 
+    stroke-width="32" 
+    fill="none" 
+  />
+  <line x1="250" y1="256" x2="400" y2="256" stroke="url(#excelGrad)" stroke-width="32" />
+  <line x1="325" y1="176" x2="325" y2="336" stroke="url(#excelGrad)" stroke-width="32" />
+
+  <!-- Center: Conversion Arrow -->
+  <path 
+    d="M 180 256 L 220 256 M 205 241 L 220 256 L 205 271" 
+    stroke="#94a3b8" 
+    stroke-width="12" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    fill="none" 
+  />
+</svg>

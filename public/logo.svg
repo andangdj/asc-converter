@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+  </defs>
+  <!-- Background rounded square -->
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="url(#bg)"/>
+  <!-- Arrow from XML(blue) to Excel(green) -->
+  <g transform="translate(64,52)">
+    <!-- Arrow line -->
+    <line x1="-32" y1="0" x2="22" y2="0" stroke="white" stroke-width="5" stroke-linecap="round"/>
+    <!-- Arrow head -->
+    <polygon points="30,-11 50,0 30,11" fill="white"/>
+    <!-- Left document (XML) -->
+    <rect x="-52" y="-18" width="20" height="25" rx="3" fill="white" opacity="0.9"/>
+    <text x="-42" y="-2" font-family="Arial,sans-serif" font-size="8" font-weight="bold" fill="#2563EB" text-anchor="middle">XML</text>
+    <!-- Right document (Excel) -->
+    <rect x="50" y="-18" width="20" height="25" rx="3" fill="white" opacity="0.9"/>
+    <text x="60" y="-2" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="#16A34A" text-anchor="middle">XLSX</text>
+    <!-- Center sparkle -->
+    <text x="-2" y="4" font-size="12" text-anchor="middle" fill="white" opacity="0.3">✦</text>
+  </g>
+  <!-- Bottom label -->
+  <text x="64" y="108" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="white" text-anchor="middle">aSc → Excel</text>
+</svg>
