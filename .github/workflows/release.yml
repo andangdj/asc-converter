@@ -23,16 +23,31 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
+      - name: Generate Changelog
+        shell: pwsh
+        run: |
+          $prevTag = git tag --sort=-creatordate | Select-String -Pattern "^v" | Select-Object -First 2 | Select-Object -Last 1
+          if ($prevTag) {
+            $changelog = git log --oneline --no-merges "$prevTag..HEAD" | ForEach-Object { "- $_" }
+            if (-not $changelog) { $changelog = "- (no changes)" }
+          } else {
+            $changelog = "🚀 Initial release"
+          }
+          $changelog | Out-File -FilePath changelog.txt -Encoding utf8
+          Write-Output "CHANGELOG<<EOF" >> $env:GITHUB_ENV
+          Get-Content changelog.txt >> $env:GITHUB_ENV
+          Write-Output "EOF" >> $env:GITHUB_ENV
+
       - name: Build Tauri App
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: 
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD:
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: "aSc to Excel Converter v__VERSION__"
-          releaseBody: "Lihat CHANGELOG.md untuk detail perubahan."
+          releaseName: ${{ github.ref_name }}
+          releaseBody: ${{ env.CHANGELOG }}
           releaseDraft: false
           prerelease: false
           updaterJsonPreferNsis: true
