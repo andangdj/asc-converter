@@ -3,6 +3,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { readTextFile } from "@tauri-apps/plugin-fs";
 import { check } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
+import { getVersion } from "@tauri-apps/api/app";
 import { parseXmlContent } from "./xmlParser";
 import { generateAndSaveExcel } from "./excelGenerator";
 import { downloadAllClassesZip, downloadAllTeachersZip } from "./pdfGenerator";
@@ -29,6 +30,9 @@ function App() {
   const readyMsgRef = useRef("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // App version state
+  const [appVersion, setAppVersion] = useState("0.0.0");
+
   // Update check state
   const [updateInfo, setUpdateInfo] = useState<{
     currentVersion: string;
@@ -36,9 +40,15 @@ function App() {
     body: string;
   } | null>(null);
 
-  // Check for updates on first mount
+  // Get app version & check for updates on first mount
   useEffect(() => {
-    const checkUpdate = async () => {
+    const init = async () => {
+      try {
+        const v = await getVersion();
+        setAppVersion(v);
+      } catch {
+        // fallback to default
+      }
       try {
         const update = await check();
         if (update) {
@@ -52,7 +62,7 @@ function App() {
         // Silently fail - no network or dev mode
       }
     };
-    checkUpdate();
+    init();
   }, []);
 
   const handleUpdate = async () => {
@@ -581,7 +591,7 @@ function App() {
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 px-6 py-3 text-center text-xs text-gray-400">
-        aSc Timetables to Excel Converter v0.1.0 &middot; Developed by{" "}
+        aSc Timetables to Excel Converter v{appVersion} &middot; Developed by{" "}
         <a
           href="https://github.com/andangdj"
           target="_blank"
