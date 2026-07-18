@@ -39,6 +39,7 @@ function App() {
     newVersion: string;
     body: string;
   } | null>(null);
+  const updateRef = useRef<any>(null);
 
   // Get app version & check for updates on first mount
   useEffect(() => {
@@ -52,6 +53,7 @@ function App() {
       try {
         const update = await check();
         if (update) {
+          updateRef.current = update;
           setUpdateInfo({
             currentVersion: update.currentVersion,
             newVersion: update.version,
@@ -67,9 +69,11 @@ function App() {
 
   const handleUpdate = async () => {
     try {
-      setUpdateInfo(null);
-      await check(); // will trigger download and install
-      await relaunch();
+      if (updateRef.current) {
+        setUpdateInfo(null);
+        await updateRef.current.downloadAndInstall();
+        await relaunch();
+      }
     } catch {
       // ignore
     }
