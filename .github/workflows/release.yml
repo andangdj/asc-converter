@@ -9,6 +9,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,12 +28,13 @@ jobs:
       - name: Generate Changelog
         shell: pwsh
         run: |
-          $prevTag = git tag --sort=-creatordate | Select-String -Pattern "^v" | Select-Object -First 2 | Select-Object -Last 1
+          $currentTag = "${{ github.ref_name }}"
+          $prevTag = git tag --sort=-creatordate | Where-Object { $_ -match "^v" -and $_ -ne $currentTag } | Select-Object -First 1
           if ($prevTag) {
-            $changelog = git log --oneline --no-merges "$prevTag..HEAD" | ForEach-Object { "- $_" }
-            if (-not $changelog) { $changelog = "- (no changes)" }
+            $changelog = git log --oneline --no-merges "$prevTag..$currentTag" | ForEach-Object { "- $_" }
+            if (-not $changelog) { $changelog = "- $currentTag" }
           } else {
-            $changelog = "🚀 Initial release"
+            $changelog = "🚀 Initial release`n`n$(git log --oneline --no-merges $currentTag | ForEach-Object { "- $_" })"
           }
           $changelog | Out-File -FilePath changelog.txt -Encoding utf8
           Write-Output "CHANGELOG<<EOF" >> $env:GITHUB_ENV
